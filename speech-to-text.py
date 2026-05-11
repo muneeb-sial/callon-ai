@@ -2,7 +2,8 @@
 from faster_whisper import WhisperModel
 
 # Load model
-model = WhisperModel("base", device="cuda", compute_type="float16")
+model = WhisperModel("base")
+# model = WhisperModel("base", device="cuda", compute_type="float16")
 
 def audio_file_to_text(audio_file: str):
     segments, info = model.transcribe(audio_file, beam_size=5)
@@ -16,4 +17,4 @@ def audio_stream_to_text(audio_stream):
     # popbabliy will feed to buffer
     pass
 
-audio_file_to_text("./audio.mp3")
+audio_file_to_text("./audio.webm")

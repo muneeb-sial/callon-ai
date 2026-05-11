@@ -23,4 +23,4 @@ def text_to_audio_stream(text: str):
         yield gs, ps, audio
         
         
-# text_to_audio_file("Hello, this is a test of the text-to-audio conversion. Hello, this is a test of the text-to-audio conversion. Hello, this is a test of the text-to-audio conversion.")
+text_to_audio_file("Hello, Sup, what's the apps?")
