@@ -1,4 +1,4 @@
-
+import tempfile
 from faster_whisper import WhisperModel
 
 # Load model
@@ -13,8 +13,24 @@ def audio_file_to_text(audio_file: str):
         print(f"[{segment.start:.2f}s -> {segment.end:.2f}s] {segment.text}")
         # yield segment.start, segment.end, segment.text
         
-def audio_stream_to_text(audio_stream):
-    # popbabliy will feed to buffer
-    pass
+def audio_stream_to_text(audio_bytes: bytes):
+    # Save bytes temporarily
+    with tempfile.NamedTemporaryFile(suffix=".webm") as temp_audio:
+        temp_audio.write(audio_bytes)
+        temp_audio.flush()
+
+        segments, info = model.transcribe(
+            temp_audio.name,
+            beam_size=5
+        )
+
+        print("Language:", info.language)
+
+        text = ""
+
+        for segment in segments:
+            text += segment.text + " "
+
+        return text.strip()
 
 audio_file_to_text("./audio.webm")
