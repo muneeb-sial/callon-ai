@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 from config.server.conn import fastapi_instance as app
 from config.socket.main import sio_app
 

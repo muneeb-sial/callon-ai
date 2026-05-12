@@ -2,3 +2,4 @@
 /venv
 audio.webm
 __pycache__
+.env
