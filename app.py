@@ -1,5 +1,5 @@
 from config.server.conn import fastapi_instance as app
-from config.socket.conn import sio_app
+from config.socket.main import sio_app
 
 app.mount("/", app=sio_app)
 
