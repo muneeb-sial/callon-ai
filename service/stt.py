@@ -2,6 +2,7 @@ from datetime import datetime
 import tempfile
 from faster_whisper import WhisperModel
 import os
+import numpy as np
 
 # Load model
 model = WhisperModel("base")
@@ -14,7 +15,30 @@ def audio_file_to_text(audio_file: str):
     for segment in segments:
         print(f"[{segment.start:.2f}s -> {segment.end:.2f}s] {segment.text}")
         # yield segment.start, segment.end, segment.text
-        
+
+def audio_pcm_stream_to_text(audio_bytes: bytes):
+    pcm = np.frombuffer(
+        audio_bytes,
+        dtype=np.int16
+    )
+
+    audio = (
+        pcm.astype(np.float32)
+        / 32768.0
+    )
+
+    segments, info = model.transcribe(
+        audio,
+        beam_size=5
+    )
+
+    text = ""
+
+    for segment in segments:
+        text += segment.text + " "
+
+    return text.strip()
+
 def audio_stream_to_text(audio_bytes: bytes):
     start = datetime.now()
     print("✅1 Received audio bytes, processing...")
